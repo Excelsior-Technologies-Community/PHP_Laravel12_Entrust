@@ -4,11 +4,15 @@ return [
     'role_structure' => [
         'admin' => [
             'users' => 'c,r,u,d',
+            'roles' => 'c,r,u,d',
+            'permissions' => 'c,r,u,d',
+            'products' => 'c,r,u,d',
             'admin' => 'c,r,u,d',
             'profile' => 'c,r,u,d'
         ],
         'subadmin' => [
             'users' => 'r',         // Subadmin can only read users
+            'products' => 'r',
             'profile' => 'r,u'      // Subadmin can read and update profile
         ],
     ],

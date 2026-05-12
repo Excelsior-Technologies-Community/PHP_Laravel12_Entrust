@@ -22,6 +22,30 @@
                         {{ __('Admin Panel') }}
                     </x-nav-link>
                     @endrole
+
+                    @permission('read-users')
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                        {{ __('Users') }}
+                    </x-nav-link>
+                    @endpermission
+
+                    @permission('read-roles')
+                    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+                        {{ __('Roles') }}
+                    </x-nav-link>
+                    @endpermission
+
+                    @permission('read-permissions')
+                    <x-nav-link :href="route('admin.permissions.index')" :active="request()->routeIs('admin.permissions.*')">
+                        {{ __('Permissions') }}
+                    </x-nav-link>
+                    @endpermission
+
+                    @permission('read-products')
+                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
+                        {{ __('Products') }}
+                    </x-nav-link>
+                    @endpermission
                 </div>
             </div>
 
@@ -77,6 +101,26 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @permission('read-users')
+            <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                {{ __('Users') }}
+            </x-responsive-nav-link>
+            @endpermission
+            @permission('read-roles')
+            <x-responsive-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+                {{ __('Roles') }}
+            </x-responsive-nav-link>
+            @endpermission
+            @permission('read-permissions')
+            <x-responsive-nav-link :href="route('admin.permissions.index')" :active="request()->routeIs('admin.permissions.*')">
+                {{ __('Permissions') }}
+            </x-responsive-nav-link>
+            @endpermission
+            @permission('read-products')
+            <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
+                {{ __('Products') }}
+            </x-responsive-nav-link>
+            @endpermission
         </div>
 
         <!-- Responsive Settings Options -->
