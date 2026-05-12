@@ -9,5 +9,9 @@ class Permission extends EntrustPermission
 {
     use HasFactory;
 
-    
+    protected $fillable = [
+        'name',
+        'display_name',
+        'description',
+    ];
 }

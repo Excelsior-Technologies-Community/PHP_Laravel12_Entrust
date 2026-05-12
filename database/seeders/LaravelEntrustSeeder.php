@@ -17,9 +17,6 @@ class LaravelEntrustSeeder extends Seeder
      */
     public function run()
     {
-        $this->command->info('Truncating Roles, Permissions and Users tables');
-        $this->truncateEntrustTables();
-
         $config = config('entrust_seeder.role_structure');
         $userRoles = config('entrust_seeder.user_roles');
         $mapPermission = collect(config('entrust_seeder.permissions_map'));
@@ -27,11 +24,13 @@ class LaravelEntrustSeeder extends Seeder
         foreach ($config as $key => $modules) {
 
             // Create a new role
-            $role = \App\Models\Role::create([
-                'name' => $key,
-                'display_name' => ucwords(str_replace('_', ' ', $key)),
-                'description' => ucwords(str_replace('_', ' ', $key))
-            ]);
+            $role = \App\Models\Role::updateOrCreate(
+                ['name' => $key],
+                [
+                    'display_name' => ucwords(str_replace('_', ' ', $key)),
+                    'description' => ucwords(str_replace('_', ' ', $key)),
+                ]
+            );
             $permissions = [];
 
             $this->command->info('Creating Role '. strtoupper($key));
@@ -65,8 +64,11 @@ class LaravelEntrustSeeder extends Seeder
                     if(isset($role_user["password"])) {
                         $role_user["password"] = Hash::make($role_user["password"]);
                     }
-                    $user = \App\Models\User::create($role_user);
-                    $user->attachRole($role);
+                    $user = \App\Models\User::updateOrCreate(
+                        ['email' => $role_user['email']],
+                        $role_user
+                    );
+                    $user->roles()->syncWithoutDetaching([$role->id]);
                 }
             }
         }
